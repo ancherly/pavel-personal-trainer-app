@@ -1,0 +1,172 @@
+/* Tipografía inspirada en mujersegura.es */
+:root {
+    --font-family-primary: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-family-secondary: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-family-mono: 'Monaco', 'Consolas', 'Courier New', monospace;
+}
+
+* {
+    font-family: var(--font-family-primary);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 1.5rem 0 1rem 0;
+    font-family: var(--font-family-secondary);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-color);
+    letter-spacing: -0.025em;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    
+    @media (max-width: 768px) {
+        font-size: 2.25rem;
+    }
+}
+
+h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    
+    @media (max-width: 768px) {
+        font-size: 2rem;
+    }
+}
+
+h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    
+    @media (max-width: 768px) {
+        font-size: 1.75rem;
+    }
+}
+
+h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+h5 {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+h6 {
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Clases utilitarias para texto */
+.text-hero {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    
+    @media (max-width: 768px) {
+        font-size: 2.5rem;
+    }
+}
+
+.text-lead {
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-color-secondary);
+}
+
+.text-emphasis {
+    font-weight: 600;
+    color: var(--brand-primary);
+}
+
+mark {
+    background: linear-gradient(120deg, var(--brand-accent) 0%, var(--brand-accent) 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 0.2em;
+    background-position: 0 88%;
+    padding: 0.25rem 0.4rem;
+    border-radius: var(--content-border-radius);
+    font-family: var(--font-family-mono);
+}
+
+blockquote {
+    margin: 1.5rem 0;
+    padding: 1.5rem 2rem;
+    border-left: 4px solid var(--brand-primary);
+    background: var(--neutral-50);
+    border-radius: 0 var(--content-border-radius) var(--content-border-radius) 0;
+    font-style: italic;
+}
+
+hr {
+    border-top: solid var(--surface-border);
+    border-width: 1px 0 0 0;
+    margin: 2rem 0;
+}
+
+p {
+    margin: 0 0 1.25rem 0;
+    line-height: 1.7;
+    font-size: 1rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+    
+    &.text-large {
+        font-size: 1.125rem;
+        line-height: 1.8;
+    }
+}
+
+/* Botones con estilo mujersegura.es */
+.btn-primary {
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+    font-family: var(--font-family-secondary);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(22, 160, 133, 0.3);
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(22, 160, 133, 0.4);
+    }
+}
+
+.btn-accent {
+    background: linear-gradient(135deg, var(--brand-accent) 0%, #e67e22 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+    font-family: var(--font-family-secondary);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+}

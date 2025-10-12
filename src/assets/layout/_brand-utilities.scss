@@ -1,0 +1,185 @@
+/* Utilidades de marca inspiradas en mujersegura.es */
+
+/* Colores de texto */
+.text-primary { color: var(--brand-primary) !important; }
+.text-secondary { color: var(--brand-secondary) !important; }
+.text-accent { color: var(--brand-accent) !important; }
+.text-coral { color: var(--brand-coral) !important; }
+.text-success { color: var(--brand-success) !important; }
+.text-warning { color: var(--brand-warning) !important; }
+.text-danger { color: var(--brand-danger) !important; }
+
+/* Fondos */
+.bg-primary { 
+    background: var(--brand-primary) !important; 
+    color: white;
+}
+.bg-secondary { 
+    background: var(--brand-secondary) !important; 
+    color: white;
+}
+.bg-accent { 
+    background: var(--brand-accent) !important; 
+    color: white;
+}
+.bg-coral { 
+    background: var(--brand-coral) !important; 
+    color: white;
+}
+
+/* Gradientes */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%) !important;
+    color: white;
+}
+
+.bg-gradient-accent {
+    background: linear-gradient(135deg, var(--brand-accent) 0%, #e67e22 100%) !important;
+    color: white;
+}
+
+.bg-gradient-coral {
+    background: linear-gradient(135deg, var(--brand-coral) 0%, #fd79a8 100%) !important;
+    color: white;
+}
+
+/* Sombras */
+.shadow-primary {
+    box-shadow: 0 4px 15px rgba(22, 160, 133, 0.2) !important;
+}
+
+.shadow-accent {
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.2) !important;
+}
+
+.shadow-coral {
+    box-shadow: 0 4px 15px rgba(255, 118, 117, 0.2) !important;
+}
+
+/* Cards con estilo mujersegura.es */
+.card-testimonial {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--neutral-200);
+    transition: all 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+}
+
+.card-feature {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid var(--neutral-200);
+    transition: all 0.3s ease;
+    
+    &:hover {
+        border-color: var(--brand-primary);
+        box-shadow: 0 8px 30px rgba(22, 160, 133, 0.15);
+    }
+}
+
+/* Hero section */
+.hero-section {
+    background: linear-gradient(135deg, var(--neutral-50) 0%, white 100%);
+    padding: 4rem 0;
+    text-align: center;
+    
+    @media (min-width: 768px) {
+        padding: 6rem 0;
+    }
+}
+
+/* Call-to-action sections */
+.cta-section {
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+    color: white;
+    padding: 3rem 0;
+    text-align: center;
+    
+    h2, h3 {
+        color: white;
+    }
+}
+
+/* Badges y etiquetas */
+.badge-success {
+    background: var(--brand-success);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-accent {
+    background: var(--brand-accent);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* Estilos para números y estadísticas */
+.stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--brand-primary);
+    line-height: 1;
+    font-family: var(--font-family-secondary);
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: var(--text-color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+}
+
+/* Animaciones y transiciones */
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.animate-slide-up {
+    animation: slideUp 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* Espaciado responsive */
+.section-padding {
+    padding: 3rem 1rem;
+    
+    @media (min-width: 768px) {
+        padding: 4rem 2rem;
+    }
+    
+    @media (min-width: 1200px) {
+        padding: 5rem 0;
+    }
+}
