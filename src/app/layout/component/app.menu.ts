@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppMenuitem } from './app.menuitem';
 
@@ -18,84 +18,31 @@ import { AppMenuitem } from './app.menuitem';
 export class AppMenu {
     model: MenuItem[] = [];
 
+    constructor(private router: Router) {}
+
     ngOnInit() {
+        // Keep menu minimal: a Features section (links to key pages) and
+        // a Configuración section with quick access to user/food management.
         this.model = [
             {
-                label: 'Principal',
-                items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
-            },
-            {
-                label: 'Gestión',
+                label: 'Funkce',
                 items: [
-                    { label: 'Formularios', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
-                    { label: 'Datos', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'] },
-                    { label: 'Reportes', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts'] },
-                    { label: 'CRUD', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/crud'] }
+                    { label: 'Domů', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
+                    { label: 'Ekvivalence', icon: 'pi pi-fw pi-table', routerLink: ['/equivalencias'] }
                 ]
             },
             {
-                label: 'Herramientas',
-                items: [
-                    { label: 'Componentes', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] },
-                    { label: 'Botones', icon: 'pi pi-fw pi-mobile', routerLink: ['/uikit/button'] },
-                    { label: 'Mensajes', icon: 'pi pi-fw pi-comment', routerLink: ['/uikit/message'] },
-                    { label: 'Archivos', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file'] }
-                ]
-            },
-            {
-                label: 'Configuración',
+                label: 'Konfigurace',
                 items: [
                     {
-                        label: 'Autenticación',
-                        icon: 'pi pi-fw pi-user',
-                        items: [
-                            {
-                                label: 'Iniciar Sesión',
-                                icon: 'pi pi-fw pi-sign-in',
-                                routerLink: ['/auth/login']
-                            },
-                            {
-                                label: 'Error',
-                                icon: 'pi pi-fw pi-times-circle',
-                                routerLink: ['/auth/error']
-                            },
-                            {
-                                label: 'Acceso Denegado',
-                                icon: 'pi pi-fw pi-lock',
-                                routerLink: ['/auth/access']
-                            }
-                        ]
+                        label: 'Správa uživatelů',
+                        icon: 'pi pi-fw pi-users',
+                        command: () => this.router.navigate(['/configuracion'], { queryParams: { tab: 'usuarios' } })
                     },
                     {
-                        label: 'Páginas',
-                        icon: 'pi pi-fw pi-clone',
-                        items: [
-                            {
-                                label: 'Página de Inicio',
-                                icon: 'pi pi-fw pi-globe',
-                                routerLink: ['/landing']
-                            },
-                            {
-                                label: 'No Encontrado',
-                                icon: 'pi pi-fw pi-exclamation-circle',
-                                routerLink: ['/pages/notfound']
-                            },
-                            {
-                                label: 'Vacía',
-                                icon: 'pi pi-fw pi-circle-off',
-                                routerLink: ['/pages/empty']
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                label: 'Recursos',
-                items: [
-                    {
-                        label: 'Documentación',
-                        icon: 'pi pi-fw pi-book',
-                        routerLink: ['/documentation']
+                        label: 'Správa potravin',
+                        icon: 'pi pi-fw pi-shopping-cart',
+                        command: () => this.router.navigate(['/configuracion'], { queryParams: { tab: 'alimentos' } })
                     }
                 ]
             }

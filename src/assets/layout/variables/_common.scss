@@ -1,13 +1,13 @@
 :root {
     /* Paleta de colores inspirada en mujersegura.es */
-    --brand-primary: #92ebff;      /* Azul turquesa principal */
-    --brand-secondary: #00b4d8;    /* Azul secundario más intenso */
-    --brand-accent: #f39c12;       /* Dorado/amarillo para destacar */
-    --brand-coral: #ff7675;        /* Rosa coral suave */
-    --brand-success: #00b894;      /* Verde éxito */
-    --brand-warning: #fdcb6e;      /* Amarillo advertencia */
-    --brand-danger: #e74c3c;       /* Rojo peligro */
-    
+    --brand-primary: #92ebff; /* Azul turquesa principal */
+    --brand-secondary: #00b4d8; /* Azul secundario más intenso */
+    --brand-accent: #f39c12; /* Dorado/amarillo para destacar */
+    --brand-coral: #ff7675; /* Rosa coral suave */
+    --brand-success: #17974a; /* Verde éxito */
+    --brand-warning: #fdcb6e; /* Amarillo advertencia */
+    --brand-danger: #e74c3c; /* Rojo peligro */
+
     /* Grises y neutros */
     --neutral-50: #fafafa;
     --neutral-100: #f4f4f5;
@@ -19,7 +19,7 @@
     --neutral-700: #3f3f46;
     --neutral-800: #27272a;
     --neutral-900: #18181b;
-    
+
     /* Variables del sistema PrimeNG */
     --primary-color: var(--brand-primary);
     --primary-contrast-color: white;
@@ -39,13 +39,13 @@
     --focus-ring-color: var(--brand-primary);
     --focus-ring-offset: 2px;
     --focus-ring-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
-    
+
     /* Variables específicas de PrimeNG para componentes */
     --p-primary-color: var(--brand-primary);
     --p-primary-contrast-color: white;
     --p-primary-hover-color: var(--brand-secondary);
     --p-primary-active-color: var(--brand-secondary);
-    
+
     /* Variables de botones PrimeNG */
     --p-button-primary-background: var(--brand-primary);
     --p-button-primary-border-color: var(--brand-primary);
@@ -56,16 +56,16 @@
     --p-button-primary-active-background: var(--brand-secondary);
     --p-button-primary-active-border-color: var(--brand-secondary);
     --p-button-primary-active-color: white;
-    
+
     /* Variables de formularios PrimeNG */
     --p-focus-ring-color: var(--brand-primary);
     --p-focus-ring-shadow: 0 0 0 0.2rem rgba(146, 235, 255, 0.3);
-    
+
     /* Variables de contenido PrimeNG */
     --p-content-border-color: var(--neutral-200);
     --p-content-background: white;
     --p-content-hover-background: var(--neutral-50);
-    
+
     /* Variables de texto PrimeNG */
     --p-text-color: var(--neutral-800);
     --p-text-muted-color: var(--neutral-600);

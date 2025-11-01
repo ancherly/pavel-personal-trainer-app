@@ -4,27 +4,27 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 import { AppTopbar } from './app.topbar';
 import { AppSidebar } from './app.sidebar';
-import { AppFooter } from './app.footer';
 import { LayoutService } from '../service/layout.service';
 
 @Component({
     selector: 'app-layout',
     standalone: true,
-    imports: [CommonModule, AppTopbar, AppSidebar, RouterModule, AppFooter],
+    imports: [CommonModule, AppTopbar, AppSidebar, RouterModule],
     template: `<div class="layout-wrapper" [ngClass]="containerClass">
-        <app-topbar></app-topbar>
+        <app-topbar *ngIf="showTopbar"></app-topbar>
         <app-sidebar></app-sidebar>
         <div class="layout-main-container">
             <div class="layout-main">
                 <router-outlet></router-outlet>
             </div>
-            <app-footer></app-footer>
         </div>
         <div class="layout-mask animate-fadein"></div>
     </div> `
 })
 export class AppLayout {
     overlayMenuOpenSubscription: Subscription;
+
+    currentUrl: string = '/';
 
     menuOutsideClickListener: any;
 
@@ -37,6 +37,8 @@ export class AppLayout {
         public renderer: Renderer2,
         public router: Router
     ) {
+        this.currentUrl = this.router.url || '/';
+
         this.overlayMenuOpenSubscription = this.layoutService.overlayOpen$.subscribe(() => {
             if (!this.menuOutsideClickListener) {
                 this.menuOutsideClickListener = this.renderer.listen('document', 'click', (event) => {
@@ -51,8 +53,10 @@ export class AppLayout {
             }
         });
 
-        this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+        this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event) => {
+            const nav = event as NavigationEnd;
             this.hideMenu();
+            this.currentUrl = nav.urlAfterRedirects || nav.url || '/';
         });
     }
 
@@ -97,6 +101,11 @@ export class AppLayout {
             'layout-overlay-active': this.layoutService.layoutState().overlayMenuActive,
             'layout-mobile-active': this.layoutService.layoutState().staticMenuMobileActive
         };
+    }
+
+    get showTopbar() {
+        // Hide topbar on the home route (root). Adjust additional paths if needed.
+        return !(this.currentUrl === '/' || this.currentUrl === '/home');
     }
 
     ngOnDestroy() {
