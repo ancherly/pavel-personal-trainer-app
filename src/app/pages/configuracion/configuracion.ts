@@ -805,7 +805,9 @@ interface Racion {
                 background: rgba(15, 23, 42, 0.85) !important;
                 backdrop-filter: blur(20px) !important;
                 border: 2px solid var(--brand-primary);
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 60px rgba(146, 235, 255, 0.2);
+                box-shadow:
+                    0 8px 32px rgba(0, 0, 0, 0.4),
+                    0 0 60px rgba(146, 235, 255, 0.2);
             }
 
             ::ng-deep .p-dialog .p-dialog-header {
@@ -1064,7 +1066,9 @@ interface Racion {
                 backdrop-filter: blur(20px) !important;
                 border: 1px solid rgba(146, 235, 255, 0.3) !important;
                 border-radius: 8px !important;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 30px rgba(146, 235, 255, 0.2) !important;
+                box-shadow:
+                    0 8px 32px rgba(0, 0, 0, 0.4),
+                    0 0 30px rgba(146, 235, 255, 0.2) !important;
             }
 
             ::ng-deep .p-select-overlay .p-select-option {
