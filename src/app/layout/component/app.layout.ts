@@ -105,7 +105,7 @@ export class AppLayout {
 
     get showTopbar() {
         // Hide topbar on the home route (root). Adjust additional paths if needed.
-        return !(this.currentUrl === '/' || this.currentUrl === '/home');
+        return !(this.currentUrl === '/' || this.currentUrl === '/domu');
     }
 
     ngOnDestroy() {

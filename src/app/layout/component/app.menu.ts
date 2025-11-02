@@ -27,8 +27,8 @@ export class AppMenu {
             {
                 label: 'Funkce',
                 items: [
-                    { label: 'Domů', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
-                    { label: 'Ekvivalence', icon: 'pi pi-fw pi-table', routerLink: ['/equivalencias'] }
+                    { label: 'Domů', icon: 'pi pi-fw pi-home', routerLink: ['/domu'] },
+                    { label: 'Ekvivalence', icon: 'pi pi-fw pi-table', routerLink: ['/ekvivalence'] }
                 ]
             },
             {
@@ -37,12 +37,12 @@ export class AppMenu {
                     {
                         label: 'Správa uživatelů',
                         icon: 'pi pi-fw pi-users',
-                        command: () => this.router.navigate(['/configuracion'], { queryParams: { tab: 'usuarios' } })
+                        command: () => this.router.navigate(['/nastaveni'], { queryParams: { tab: 'uživatelé' } })
                     },
                     {
                         label: 'Správa potravin',
                         icon: 'pi pi-fw pi-shopping-cart',
-                        command: () => this.router.navigate(['/configuracion'], { queryParams: { tab: 'alimentos' } })
+                        command: () => this.router.navigate(['/nastaveni'], { queryParams: { tab: 'potraviny' } })
                     }
                 ]
             }

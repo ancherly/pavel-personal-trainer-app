@@ -35,7 +35,7 @@ import { RippleModule } from 'primeng/ripple';
                                     <label for="rememberme1" class="checkbox-label">Zapamatuj si mě</label>
                                 </div>
                             </div>
-                            <p-button label="Přihlásit se" styleClass="login-button" routerLink="/home"></p-button>
+                            <p-button label="Přihlásit se" styleClass="login-button" routerLink="/domu"></p-button>
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@ import { RippleModule } from 'primeng/ripple';
                 max-width: 480px;
 
                 @media (max-width: 576px) {
-                    max-width: 92%; /* Ocupa el 92% del ancho en móviles */
+                    max-width: 98%; /* Ocupa el 98% del ancho en móviles */
                     margin: 0 auto;
                 }
             }
@@ -105,7 +105,7 @@ import { RippleModule } from 'primeng/ripple';
                 transition: all 0.3s ease;
 
                 @media (max-width: 576px) {
-                    padding: 2.5rem 2rem; /* Padding más generoso */
+                    padding: 3.5rem 3rem; /* Padding aún más generoso */
                     border-radius: 20px;
                 }
 
@@ -126,6 +126,10 @@ import { RippleModule } from 'primeng/ripple';
             .login-header {
                 text-align: center;
                 margin-bottom: 2rem;
+
+                @media (max-width: 576px) {
+                    margin-bottom: 2.5rem;
+                }
             }
 
             .login-logo {
@@ -138,8 +142,8 @@ import { RippleModule } from 'primeng/ripple';
                 transition: transform 0.3s ease;
 
                 @media (max-width: 576px) {
-                    max-height: 60px;
-                    margin-bottom: 1.5rem;
+                    max-height: 80px; /* Logo más grande */
+                    margin-bottom: 2rem;
                 }
             }
 
@@ -179,7 +183,8 @@ import { RippleModule } from 'primeng/ripple';
                 font-family: var(--font-family-secondary);
 
                 @media (max-width: 576px) {
-                    font-size: 1rem;
+                    font-size: 1.05rem;
+                    margin-bottom: 0.75rem;
                 }
             }
 
@@ -190,12 +195,17 @@ import { RippleModule } from 'primeng/ripple';
 
                 @media (max-width: 576px) {
                     min-width: 100%;
+                    margin-bottom: 3rem;
                 }
             }
 
             .password-input {
                 margin-bottom: 2rem;
                 width: 100%;
+
+                @media (max-width: 576px) {
+                    margin-bottom: 3rem;
+                }
             }
 
             .form-footer {

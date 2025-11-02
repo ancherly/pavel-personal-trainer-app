@@ -1187,11 +1187,6 @@ interface AlimentoEquivalente {
                     width: 100%;
                 }
 
-                ::ng-deep .peso-controls .p-button {
-                    width: 36px;
-                    height: 36px;
-                }
-
                 .macros-inline {
                     gap: 0.35rem;
                     flex-wrap: wrap;

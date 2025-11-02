@@ -13,7 +13,7 @@ import { RippleModule } from 'primeng/ripple';
             <div class="home-wrapper">
                 <div class="cards-container">
                     <div class="card-wrapper">
-                        <p-card class="menu-card config-card" routerLink="/configuracion">
+                        <p-card class="menu-card config-card" routerLink="/nastaveni">
                             <ng-template pTemplate="header">
                                 <div class="card-icon-container">
                                     <!-- Icono personalizado para configuración -->
@@ -30,7 +30,7 @@ import { RippleModule } from 'primeng/ripple';
                     </div>
 
                     <div class="card-wrapper">
-                        <p-card class="equivalencias-card" routerLink="/equivalencias">
+                        <p-card class="equivalencias-card" routerLink="/ekvivalence">
                             <ng-template pTemplate="header">
                                 <div class="card-icon-container">
                                     <!-- Usamos el asset movido a public/logo/ -->

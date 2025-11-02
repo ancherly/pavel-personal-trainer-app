@@ -14,11 +14,6 @@ body {
 }
 
 body {
-    background-image: url('./demo/images/background.webp');
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
     position: relative;
     min-height: 100vh;
     min-height: -webkit-fill-available; /* Safari iOS */
@@ -36,6 +31,31 @@ body {
     }
 }
 
+/* Fondo fijo que no se reajusta con el scroll */
+body::after {
+    content: '';
+    position: fixed;
+    top: -10%;
+    left: -5%;
+    width: 110vw;
+    height: 120vh;
+    background-image: url('./demo/images/background.webp');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: -2;
+    pointer-events: none;
+
+    /* En móviles, asegurar que cubra todo incluso con cambios de viewport */
+    @media (max-width: 768px) {
+        top: -15%;
+        left: -5%;
+        width: 110vw;
+        height: 130vh;
+        background-attachment: scroll;
+    }
+}
+
 /* Permitir scroll solo en la página de equivalencias */
 body:has(.equivalencias-container) {
     @media (max-width: 768px) {
@@ -50,14 +70,22 @@ body:has(.equivalencias-container) {
 body::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -10%;
+    left: -5%;
+    width: 110vw;
+    height: 120vh;
     background: rgb(34 34 34 / 73%);
     backdrop-filter: blur(0.5px);
     z-index: -1;
     pointer-events: none;
+
+    /* En móviles, asegurar que cubra todo incluso con cambios de viewport */
+    @media (max-width: 768px) {
+        top: -15%;
+        left: -5%;
+        width: 110vw;
+        height: 130vh;
+    }
 }
 
 /* Asegurar que el contenido tenga el z-index correcto */

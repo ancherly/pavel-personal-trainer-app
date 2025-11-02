@@ -1163,9 +1163,9 @@ export class Configuracion implements OnInit {
         // Escuchar query params para seleccionar la pestaña en la configuración
         this.route.queryParams.subscribe((params: any) => {
             const tab: string = params['tab'];
-            if (tab === 'alimentos' || tab === 'raciones' || tab === 'raciones') {
+            if (tab === 'potraviny') {
                 this.activeTab = '1';
-            } else if (tab === 'usuarios' || tab === 'users') {
+            } else if (tab === 'uživatelé') {
                 this.activeTab = '0';
             } else {
                 // Default
