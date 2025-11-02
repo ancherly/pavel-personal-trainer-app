@@ -3,7 +3,7 @@
 .layout-sidebar {
     position: fixed;
     width: 20rem;
-    height: calc(100svh - 8rem); /* Small viewport height - evita scroll cuando desaparece URL bar */
+    height: calc(100dvh - 8rem); /* Usa dynamic viewport height */
     z-index: 999;
     overflow-y: auto;
     user-select: none;
@@ -22,12 +22,12 @@
     border: 1px solid rgba(15, 95, 150, 0.06);
     backdrop-filter: blur(6px) saturate(120%);
 
-    @supports not (height: 100svh) {
+    @supports not (height: 100dvh) {
         height: calc(100vh - 8rem); /* Fallback */
     }
 
     @media (max-width: 768px) {
-        height: calc(100svh - 7rem); /* Ajuste para móviles */
+        height: calc(100dvh - 7rem); /* Ajuste para móviles */
         padding-bottom: 5rem; /* Más espacio en móviles para evitar la barra de navegación */
     }
 }
@@ -228,11 +228,11 @@ element.style {
 /* Ajustes para sidebar en modo móvil */
 @media (max-width: 991px) {
     .layout-sidebar {
-        height: 100svh !important; /* Small viewport height - evita scroll cuando desaparece URL bar */
+        height: 100dvh !important;
         top: 0 !important;
         padding-bottom: 6rem !important; /* Espacio extra para el botón de logout en móviles */
 
-        @supports not (height: 100svh) {
+        @supports not (height: 100dvh) {
             height: 100vh !important;
         }
     }

@@ -48,7 +48,7 @@ import { RippleModule } from 'primeng/ripple';
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                height: 100svh; /* Small viewport height - evita scroll cuando desaparece URL bar */
+                height: 100dvh; /* Usa dynamic viewport height para móviles */
                 min-height: -webkit-fill-available; /* Safari iOS */
                 width: 100vw;
                 overflow: hidden;
@@ -58,11 +58,9 @@ import { RippleModule } from 'primeng/ripple';
                 position: fixed; /* Fija el contenedor */
                 top: 0;
                 left: 0;
-                touch-action: none; /* Previene gestos que ocultan la barra de URL */
-                overscroll-behavior: none; /* Previene scroll del navegador */
 
-                @supports not (height: 100svh) {
-                    height: 100vh; /* Fallback para navegadores que no soportan svh */
+                @supports not (height: 100dvh) {
+                    height: 100vh; /* Fallback para navegadores que no soportan dvh */
                 }
 
                 @media (max-width: 576px) {

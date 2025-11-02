@@ -27,12 +27,10 @@ body {
     @media (max-width: 768px) {
         position: fixed;
         width: 100%;
-        height: 100svh; /* Small viewport height - evita scroll cuando desaparece URL bar */
+        height: 100dvh;
         overflow: hidden;
-        touch-action: none; /* Previene gestos de scroll que ocultan la barra de URL */
-        overscroll-behavior: none; /* Previene el bounce y scroll del navegador */
 
-        @supports not (height: 100svh) {
+        @supports not (height: 100dvh) {
             height: 100vh;
         }
     }
@@ -45,8 +43,6 @@ body:has(.equivalencias-container) {
         height: auto !important;
         overflow-y: auto !important;
         overflow-x: hidden !important;
-        touch-action: pan-y !important; /* Solo permite scroll vertical en equivalencias */
-        overscroll-behavior: contain !important; /* Contiene el scroll dentro de la página */
     }
 }
 

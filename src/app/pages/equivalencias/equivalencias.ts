@@ -985,12 +985,12 @@ interface AlimentoEquivalente {
             @media screen and (max-width: 767px) {
                 /* Hacer que los cards en móvil también tengan altura fija */
                 .paso-card {
-                    height: calc(100svh - 6rem) !important; /* Small viewport height - evita scroll cuando desaparece URL bar */
-                    max-height: calc(100svh - 6rem) !important;
-                    min-height: calc(100svh - 6rem) !important;
+                    height: calc(100dvh - 6rem) !important;
+                    max-height: calc(100dvh - 6rem) !important;
+                    min-height: calc(100dvh - 6rem) !important;
                     overflow: hidden;
 
-                    @supports not (height: 100svh) {
+                    @supports not (height: 100dvh) {
                         height: calc(100vh - 6rem) !important;
                         max-height: calc(100vh - 6rem) !important;
                         min-height: calc(100vh - 6rem) !important;
