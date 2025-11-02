@@ -18,7 +18,7 @@
                 transform: translateX(-100%);
                 left: 0;
                 top: 0;
-                height: 100vh;
+                height: 100dvh; /* Usa dynamic viewport height */
                 border-top-left-radius: 0;
                 border-bottom-left-radius: 0;
                 transition:
@@ -28,6 +28,10 @@
                     0px 3px 5px rgba(0, 0, 0, 0.02),
                     0px 0px 2px rgba(0, 0, 0, 0.05),
                     0px 1px 4px rgba(0, 0, 0, 0.08);
+
+                @supports not (height: 100dvh) {
+                    height: 100vh; /* Fallback */
+                }
             }
 
             &.layout-overlay-active {
@@ -74,12 +78,16 @@
             transform: translateX(-100%);
             left: 0;
             top: 0;
-            height: 100vh;
+            height: 100dvh; /* Usa dynamic viewport height */
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
             transition:
                 transform 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99),
                 left 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99);
+
+            @supports not (height: 100dvh) {
+                height: 100vh; /* Fallback */
+            }
         }
 
         .layout-mask {

@@ -16,7 +16,16 @@ import { AppMenu } from './app.menu';
                 <span class="p-button-label">Odhlásit se</span>
             </button>
         </div>
-    </div>`
+    </div>`,
+    styles: [
+        `
+            ::ng-deep .p-button:not(:disabled):hover {
+                background: transparent !important;
+                color: var(--brand-primary) !important;
+                border: 1px solid var(--brand-primary) !important;
+            }
+        `
+    ]
 })
 export class AppSidebar {
     constructor(

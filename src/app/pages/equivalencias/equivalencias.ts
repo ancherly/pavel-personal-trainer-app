@@ -137,19 +137,17 @@ interface AlimentoEquivalente {
 
                         <!-- Panel de Control de Equivalente (fuera del wrapper) -->
                         <div class="panel-control" *ngIf="equivalenteSeleccionado">
-                            <div class="control-header">
-                                <i class="pi pi-arrow-right"></i>
-                                <strong>{{ equivalenteSeleccionado.alimento.nombre }}</strong>
+                            <div class="control-header-inline">
+                                <div class="alimento-info">
+                                    <i class="pi pi-arrow-right"></i>
+                                    <strong>{{ equivalenteSeleccionado.alimento.nombre }}</strong>
+                                </div>
+                                <div class="peso-display-inline">
+                                    <span class="peso-value">{{ equivalenteSeleccionado.pesoEquivalente || 0 }} g</span>
+                                </div>
                             </div>
 
                             <div class="control-body">
-                                <!-- Peso equivalente (solo lectura) -->
-                                <div class="peso-ajuste">
-                                    <div class="peso-display">
-                                        <span class="peso-value">{{ equivalenteSeleccionado.pesoEquivalente || 0 }} g</span>
-                                    </div>
-                                </div>
-
                                 <!-- Macros calculados inline -->
                                 <div class="macros-inline">
                                     <div class="macro-badge hidratos">
@@ -197,9 +195,10 @@ interface AlimentoEquivalente {
     styles: [
         `
             .equivalencias-container {
-                min-height: calc(100vh - 6rem);
                 max-width: 1600px;
                 margin: 0 auto;
+
+                overflow-y: visible;
             }
 
             /* Grid layout para cards lado a lado */
@@ -207,6 +206,7 @@ interface AlimentoEquivalente {
                 display: grid;
                 grid-template-columns: 1fr;
                 gap: 2rem;
+                overflow: visible; /* Permitir que el grid crezca con el contenido */
             }
 
             @media screen and (min-width: 1024px) {
@@ -224,25 +224,36 @@ interface AlimentoEquivalente {
                 border-radius: 16px;
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
                 transition: all 0.3s ease;
-                height: 100%;
                 display: flex;
                 flex-direction: column;
+
+                @media screen and (min-width: 1024px) {
+                    height: 100%; /* Altura fija solo en desktop para cards lado a lado */
+                }
             }
 
             ::ng-deep .paso-card .p-card-body {
                 flex: 1;
                 display: flex;
                 flex-direction: column;
-                overflow: hidden;
+                overflow: visible; /* Permitir que el contenido sea visible */
                 min-height: 0;
+
+                @media screen and (min-width: 1024px) {
+                    overflow: hidden; /* En desktop sí mantener overflow hidden */
+                }
             }
 
             ::ng-deep .paso-card .p-card-content {
                 flex: 1;
                 display: flex;
                 flex-direction: column;
-                overflow: hidden;
+                overflow: visible; /* Permitir que el contenido sea visible */
                 min-height: 0;
+
+                @media screen and (min-width: 1024px) {
+                    overflow: hidden; /* En desktop sí mantener overflow hidden */
+                }
             }
 
             ::ng-deep .paso-card:hover {
@@ -253,25 +264,71 @@ interface AlimentoEquivalente {
             /* Panel de Control integrado en la tabla */
             .panel-control {
                 background: rgba(15, 23, 42, 0.6);
-                backdrop-filter: blur(10px);
+                backdrop-filter: blur(5px);
                 border: 1px solid rgba(146, 235, 255, 0.3);
                 border-radius: 12px;
-                padding: 1.25rem;
+                padding: 1rem;
                 flex-shrink: 0;
                 margin-top: 1rem;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                overflow: hidden;
             }
 
             .control-header {
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
-                font-size: 1rem;
+                font-size: 0.95rem;
                 color: var(--brand-primary);
                 margin-bottom: 1rem;
                 padding-bottom: 0.75rem;
                 border-bottom: 1px solid rgba(146, 235, 255, 0.2);
                 font-weight: 600;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .control-header strong {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                flex: 1;
+                min-width: 0;
+            }
+
+            /* Header en línea con peso */
+            .control-header-inline {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                margin-bottom: 1rem;
+                padding-bottom: 0.75rem;
+                border-bottom: 1px solid rgba(146, 235, 255, 0.2);
+                flex-wrap: wrap;
+            }
+
+            .alimento-info {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.95rem;
+                color: var(--brand-primary);
+                font-weight: 600;
+                overflow: hidden;
+                flex: 1 1 auto;
+                min-width: 0;
+            }
+
+            .alimento-info strong {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .alimento-info i {
+                flex-shrink: 0;
             }
 
             .control-body {
@@ -302,6 +359,7 @@ interface AlimentoEquivalente {
                 align-items: center;
                 justify-content: center;
                 gap: 0.75rem;
+                flex-shrink: 0;
             }
 
             .peso-display {
@@ -311,6 +369,12 @@ interface AlimentoEquivalente {
                 gap: 0.5rem;
             }
 
+            .peso-display-inline {
+                display: flex;
+                align-items: center;
+                flex-shrink: 0;
+            }
+
             .peso-label {
                 font-size: 0.9rem;
                 color: rgba(255, 255, 255, 0.8);
@@ -318,13 +382,14 @@ interface AlimentoEquivalente {
             }
 
             .peso-value {
-                font-size: 1.5rem;
+                font-size: 1.25rem;
                 font-weight: 700;
                 color: var(--brand-primary);
                 background: rgba(146, 235, 255, 0.15);
-                padding: 0.5rem 1.5rem;
+                padding: 0.4rem 1rem;
                 border-radius: 8px;
                 border: 1px solid rgba(146, 235, 255, 0.3);
+                white-space: nowrap;
             }
 
             ::ng-deep .peso-input-inline input {
@@ -361,9 +426,10 @@ interface AlimentoEquivalente {
 
             /* Macros como badges minimalistas en una fila */
             .macros-inline {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.4rem;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                justify-content: space-between;
             }
 
             .macro-badge {
@@ -372,13 +438,16 @@ interface AlimentoEquivalente {
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                gap: 0.25rem;
-                padding: 0.5rem 0.35rem;
+                gap: 0.3rem;
+                padding: 0.6rem 0.5rem;
                 border-radius: 8px;
                 color: var(--brand-primary);
                 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
                 transition: all 0.2s ease;
                 text-align: center;
+                flex: 1 1 calc(33.333% - 0.4rem);
+                min-width: 80px;
+                max-width: 150px;
             }
 
             .macro-badge:hover {
@@ -395,19 +464,24 @@ interface AlimentoEquivalente {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 0.15rem;
+                gap: 0.2rem;
+                width: 100%;
             }
 
             .macro-badge .label {
                 font-weight: 500;
-                font-size: 0.7rem;
+                font-size: 0.75rem;
                 opacity: 0.85;
                 white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
             }
 
             .macro-badge strong {
-                font-size: 1.1rem;
+                font-size: 1.15rem;
                 font-weight: 700;
+                white-space: nowrap;
             }
 
             /* Header personalizado */
@@ -451,7 +525,7 @@ interface AlimentoEquivalente {
 
             /* Buscador */
             .search-toolbar {
-                margin-bottom: 1.5rem;
+                margin-bottom: 0.75rem;
                 flex-shrink: 0;
             }
 
@@ -613,7 +687,7 @@ interface AlimentoEquivalente {
                 display: flex;
                 align-items: center;
                 gap: 0.75rem;
-                padding: 1rem 1.25rem;
+                padding: 0.75rem;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
                 cursor: pointer;
                 transition: all 0.2s ease;
@@ -776,14 +850,151 @@ interface AlimentoEquivalente {
                 }
             }
 
+            /* Responsive para pantallas medianas y grandes con zoom */
+            @media screen and (max-width: 1400px) {
+                .panel-control {
+                    padding: 0.9rem;
+                }
+
+                .control-header {
+                    font-size: 0.9rem;
+                }
+
+                .alimento-info {
+                    font-size: 0.9rem;
+                }
+
+                .peso-value {
+                    font-size: 1.15rem;
+                    padding: 0.35rem 0.9rem;
+                }
+
+                ::ng-deep .peso-input-inline input {
+                    font-size: 1.15rem;
+                    padding: 0.45rem 0.65rem;
+                }
+
+                .macros-inline {
+                    gap: 0.4rem;
+                }
+
+                .macro-badge {
+                    padding: 0.55rem 0.45rem;
+                    flex: 1 1 calc(33.333% - 0.35rem);
+                    min-width: 75px;
+                }
+
+                .macro-badge .label {
+                    font-size: 0.7rem;
+                }
+
+                .macro-badge strong {
+                    font-size: 1.05rem;
+                }
+            }
+
+            @media screen and (max-width: 1200px) {
+                .panel-control {
+                    padding: 0.85rem;
+                }
+
+                .control-header {
+                    font-size: 0.85rem;
+                }
+
+                .alimento-info {
+                    font-size: 0.85rem;
+                }
+
+                .control-header-inline {
+                    gap: 0.75rem;
+                }
+
+                .peso-value {
+                    font-size: 1.1rem;
+                    padding: 0.35rem 0.85rem;
+                }
+
+                ::ng-deep .peso-input-inline input {
+                    font-size: 1.1rem;
+                    padding: 0.4rem 0.6rem;
+                }
+
+                .macros-inline {
+                    gap: 0.35rem;
+                }
+
+                .macro-badge {
+                    padding: 0.5rem 0.4rem;
+                    flex: 1 1 calc(33.333% - 0.3rem);
+                    min-width: 70px;
+                }
+
+                .macro-badge .label {
+                    font-size: 0.68rem;
+                }
+
+                .macro-badge strong {
+                    font-size: 1rem;
+                }
+            }
+
+            @media screen and (max-width: 1024px) {
+                .panel-control {
+                    padding: 0.8rem;
+                }
+
+                .alimento-info {
+                    font-size: 0.8rem;
+                }
+
+                .control-header-inline {
+                    gap: 0.6rem;
+                }
+
+                .peso-value {
+                    font-size: 1.05rem;
+                    padding: 0.3rem 0.75rem;
+                }
+
+                ::ng-deep .peso-input-inline input {
+                    font-size: 1.05rem;
+                    padding: 0.35rem 0.55rem;
+                }
+
+                .macros-inline {
+                    gap: 0.3rem;
+                }
+
+                .macro-badge {
+                    padding: 0.45rem 0.35rem;
+                    flex: 1 1 calc(33.333% - 0.25rem);
+                    min-width: 65px;
+                }
+
+                .macro-badge .label {
+                    font-size: 0.65rem;
+                }
+
+                .macro-badge strong {
+                    font-size: 0.95rem;
+                }
+            }
+
             /* Responsive */
             @media screen and (max-width: 767px) {
                 /* Hacer que los cards en móvil también tengan altura fija */
                 .paso-card {
-                    height: calc(100vh - 6rem) !important;
-                    max-height: calc(100vh - 6rem) !important;
-                    min-height: calc(100vh - 6rem) !important;
+                    height: calc(100svh - 6rem) !important; /* Small viewport height - evita scroll cuando desaparece URL bar */
+                    max-height: calc(100svh - 6rem) !important;
+                    min-height: calc(100svh - 6rem) !important;
                     overflow: hidden;
+
+                    @supports not (height: 100svh) {
+                        height: calc(100vh - 6rem) !important;
+                        max-height: calc(100vh - 6rem) !important;
+                        min-height: calc(100vh - 6rem) !important;
+                    }
                 }
 
                 ::ng-deep .paso-card .p-card-content {
@@ -894,13 +1105,39 @@ interface AlimentoEquivalente {
                     font-size: 0.9rem;
                 }
 
+                .control-header-inline {
+                    gap: 1rem;
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                .peso-controls {
+                    align-self: stretch;
+                }
+
+                ::ng-deep .peso-input-inline {
+                    flex: 1;
+                }
+
+                .peso-display-inline {
+                    align-self: stretch;
+                }
+
+                .peso-value {
+                    width: 100%;
+                    text-align: center;
+                }
+
                 .macros-inline {
                     gap: 0.35rem;
+                    flex-wrap: wrap;
                 }
 
                 .macro-badge {
-                    padding: 0.45rem 0.3rem;
+                    padding: 0.5rem 0.4rem;
                     gap: 0.2rem;
+                    flex: 1 1 calc(33.333% - 0.3rem);
+                    min-width: 80px;
                 }
 
                 ::ng-deep .macro-badge .macro-icon-small {
@@ -909,7 +1146,7 @@ interface AlimentoEquivalente {
                 }
 
                 .macro-badge .label {
-                    font-size: 0.65rem;
+                    font-size: 0.68rem;
                 }
 
                 .macro-badge strong {
@@ -941,12 +1178,13 @@ interface AlimentoEquivalente {
 
                 ::ng-deep .peso-input-inline {
                     flex: 1;
-                    max-width: 120px;
+                    max-width: 164px;
                 }
 
                 ::ng-deep .peso-input-inline input {
                     font-size: 1.1rem;
                     padding: 0.4rem 0.5rem;
+                    width: 100%;
                 }
 
                 ::ng-deep .peso-controls .p-button {
@@ -955,12 +1193,15 @@ interface AlimentoEquivalente {
                 }
 
                 .macros-inline {
-                    gap: 0.3rem;
+                    gap: 0.35rem;
+                    flex-wrap: wrap;
                 }
 
                 .macro-badge {
-                    padding: 0.4rem 0.25rem;
+                    padding: 0.45rem 0.35rem;
                     gap: 0.2rem;
+                    flex: 1 1 calc(33.333% - 0.3rem);
+                    min-width: 70px;
                 }
 
                 ::ng-deep .macro-badge .macro-icon-small {
@@ -969,11 +1210,33 @@ interface AlimentoEquivalente {
                 }
 
                 .macro-badge .label {
-                    font-size: 0.65rem;
+                    font-size: 0.62rem;
                 }
 
                 .macro-badge strong {
                     font-size: 0.95rem;
+                }
+            }
+
+            /* Para pantallas muy pequeñas o zoom muy alto */
+            @media screen and (max-width: 360px) {
+                .macros-inline {
+                    flex-direction: column;
+                    gap: 0.4rem;
+                }
+
+                .macro-badge {
+                    flex: 1 1 100%;
+                    max-width: 100%;
+                    padding: 0.5rem;
+                }
+
+                .macro-badge .label {
+                    font-size: 0.7rem;
+                }
+
+                .macro-badge strong {
+                    font-size: 1rem;
                 }
             }
         `

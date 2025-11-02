@@ -3,7 +3,7 @@
 .layout-sidebar {
     position: fixed;
     width: 20rem;
-    height: calc(100vh - 8rem);
+    height: calc(100svh - 8rem); /* Small viewport height - evita scroll cuando desaparece URL bar */
     z-index: 999;
     overflow-y: auto;
     user-select: none;
@@ -15,11 +15,21 @@
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(244, 250, 255, 0.9));
     border-radius: var(--content-border-radius);
     padding: 0.75rem 1rem;
+    padding-bottom: 1.5rem; /* Espacio extra para el botón de logout */
     box-shadow:
-        0 12px 30px rgba(10, 50, 80, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        0 0px 0px #90e7fc,
+        inset 0 3px #90e7fc;
     border: 1px solid rgba(15, 95, 150, 0.06);
     backdrop-filter: blur(6px) saturate(120%);
+
+    @supports not (height: 100svh) {
+        height: calc(100vh - 8rem); /* Fallback */
+    }
+
+    @media (max-width: 768px) {
+        height: calc(100svh - 7rem); /* Ajuste para móviles */
+        padding-bottom: 5rem; /* Más espacio en móviles para evitar la barra de navegación */
+    }
 }
 
 .layout-menu {
@@ -152,6 +162,18 @@
     right: 1rem;
     display: flex;
     justify-content: center;
+
+    @media (max-width: 768px) {
+        bottom: 3.5rem; /* Más espacio desde abajo en móviles para evitar la barra de navegación */
+    }
+}
+
+element.style {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 280px;
 }
 
 .layout-sidebar .logout-button {
@@ -201,4 +223,21 @@
 .layout-submenu-enter-active {
     overflow: hidden;
     transition: max-height 1s ease-in-out;
+}
+
+/* Ajustes para sidebar en modo móvil */
+@media (max-width: 991px) {
+    .layout-sidebar {
+        height: 100svh !important; /* Small viewport height - evita scroll cuando desaparece URL bar */
+        top: 0 !important;
+        padding-bottom: 6rem !important; /* Espacio extra para el botón de logout en móviles */
+
+        @supports not (height: 100svh) {
+            height: 100vh !important;
+        }
+    }
+
+    .layout-sidebar .sidebar-footer {
+        bottom: 4rem !important; /* Posicionar el footer más arriba para evitar la barra de navegación */
+    }
 }

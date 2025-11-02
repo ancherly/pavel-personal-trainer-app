@@ -48,13 +48,26 @@ import { RippleModule } from 'primeng/ripple';
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                min-height: 100vh;
-                min-width: 100vw;
+                height: 100svh; /* Small viewport height - evita scroll cuando desaparece URL bar */
+                min-height: -webkit-fill-available; /* Safari iOS */
+                width: 100vw;
                 overflow: hidden;
                 font-family: var(--font-family-primary);
                 padding: 1rem;
                 box-sizing: border-box;
-                position: relative;
+                position: fixed; /* Fija el contenedor */
+                top: 0;
+                left: 0;
+                touch-action: none; /* Previene gestos que ocultan la barra de URL */
+                overscroll-behavior: none; /* Previene scroll del navegador */
+
+                @supports not (height: 100svh) {
+                    height: 100vh; /* Fallback para navegadores que no soportan svh */
+                }
+
+                @media (max-width: 576px) {
+                    padding: 0.5rem; /* Menos padding en móviles para más espacio */
+                }
             }
 
             .login-container::before {
@@ -75,7 +88,8 @@ import { RippleModule } from 'primeng/ripple';
                 max-width: 480px;
 
                 @media (max-width: 576px) {
-                    margin: 0 0.5rem;
+                    max-width: 92%; /* Ocupa el 92% del ancho en móviles */
+                    margin: 0 auto;
                 }
             }
 
@@ -93,12 +107,12 @@ import { RippleModule } from 'primeng/ripple';
                 transition: all 0.3s ease;
 
                 @media (max-width: 576px) {
-                    padding: 2rem 1.5rem;
+                    padding: 2.5rem 2rem; /* Padding más generoso */
                     border-radius: 20px;
                 }
 
                 @media (min-width: 576px) {
-                    padding: 4rem 4rem;
+                    padding: 1.5rem;
                 }
 
                 &:hover {

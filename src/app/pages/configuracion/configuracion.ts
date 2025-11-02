@@ -37,14 +37,10 @@ interface Usuario {
 interface Racion {
     id?: string;
     nombre?: string;
-    alimento?: string;
-    cantidad?: number;
-    unidad?: string;
-    calorias?: number;
+    peso?: number;
+    hidratos?: number;
     proteinas?: number;
-    carbohidratos?: number;
     grasas?: number;
-    categoria?: string;
 }
 
 @Component({
@@ -171,8 +167,7 @@ interface Racion {
                                     [value]="raciones()"
                                     [rows]="10"
                                     [paginator]="true"
-                                    [globalFilterFields]="['nombre', 'alimento', 'categoria']"
-                                    [tableStyle]="{ 'min-width': '100%' }"
+                                    [globalFilterFields]="['nombre']"
                                     [(selection)]="selectedRaciones"
                                     [rowHover]="true"
                                     dataKey="id"
@@ -183,15 +178,14 @@ interface Racion {
                                 >
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th style="width: 3rem">
+                                            <th style="width: 3rem; min-width: 3rem;">
                                                 <p-tableHeaderCheckbox />
                                             </th>
-                                            <th pSortableColumn="nombre" style="width: 18%">Název <p-sortIcon field="nombre" /></th>
-                                            <th pSortableColumn="alimento" style="width: 20%">Potravina <p-sortIcon field="alimento" /></th>
-                                            <th pSortableColumn="cantidad" style="width: 12%">Množství <p-sortIcon field="cantidad" /></th>
-                                            <th pSortableColumn="calorias" style="width: 12%">Kalorie <p-sortIcon field="calorias" /></th>
-                                            <th pSortableColumn="proteinas" style="width: 12%">Bílkoviny <p-sortIcon field="proteinas" /></th>
-                                            <th pSortableColumn="categoria" style="width: calc(26% - 3rem)">Kategorie <p-sortIcon field="categoria" /></th>
+                                            <th pSortableColumn="nombre" style=" min-width: 180px;">Název <p-sortIcon field="nombre" /></th>
+                                            <th pSortableColumn="peso" style=" min-width: 100px;">Váha <p-sortIcon field="peso" /></th>
+                                            <th pSortableColumn="hidratos" style=" min-width: 110px;">Sacharidy <p-sortIcon field="hidratos" /></th>
+                                            <th pSortableColumn="proteinas" style=" min-width: 110px;">Bílkoviny <p-sortIcon field="proteinas" /></th>
+                                            <th pSortableColumn="grasas" style=" min-width: 100px;">Tuky <p-sortIcon field="grasas" /></th>
                                         </tr>
                                     </ng-template>
 
@@ -201,29 +195,12 @@ interface Racion {
                                                 <p-tableCheckbox [value]="racion" />
                                             </td>
                                             <td (click)="editRacion(racion)">
-                                                <span class="p-column-title">Název</span>
                                                 {{ racion.nombre }}
                                             </td>
-                                            <td (click)="editRacion(racion)">
-                                                <span class="p-column-title">Potravina</span>
-                                                {{ racion.alimento }}
-                                            </td>
-                                            <td (click)="editRacion(racion)">
-                                                <span class="p-column-title">Množství</span>
-                                                {{ racion.cantidad }} {{ racion.unidad }}
-                                            </td>
-                                            <td (click)="editRacion(racion)">
-                                                <span class="p-column-title">Kalorie</span>
-                                                {{ racion.calorias }} kcal
-                                            </td>
-                                            <td (click)="editRacion(racion)">
-                                                <span class="p-column-title">Bílkoviny</span>
-                                                {{ racion.proteinas }}g
-                                            </td>
-                                            <td (click)="editRacion(racion)">
-                                                <span class="p-column-title">Kategorie</span>
-                                                <p-tag [value]="racion.categoria" [severity]="getCategoriaSeverity(racion.categoria)" />
-                                            </td>
+                                            <td (click)="editRacion(racion)">{{ racion.peso }}g</td>
+                                            <td (click)="editRacion(racion)">{{ racion.hidratos }}</td>
+                                            <td (click)="editRacion(racion)">{{ racion.proteinas }}</td>
+                                            <td (click)="editRacion(racion)">{{ racion.grasas }}</td>
                                         </tr>
                                     </ng-template>
                                 </p-table>
@@ -250,31 +227,6 @@ interface Racion {
                 </div>
 
                 <div class="field">
-                    <label for="telefono">Telefon</label>
-                    <input type="text" pInputText id="telefono" [(ngModel)]="usuario.telefono" />
-                </div>
-
-                <div class="formgrid grid">
-                    <div class="field col">
-                        <label for="edad">Věk</label>
-                        <p-inputNumber id="edad" [(ngModel)]="usuario.edad" [showButtons]="true" [min]="0" [max]="120" />
-                    </div>
-                    <div class="field col">
-                        <label for="peso">Váha (kg)</label>
-                        <p-inputNumber id="peso" [(ngModel)]="usuario.peso" [showButtons]="true" [min]="0" [max]="300" mode="decimal" [minFractionDigits]="1" [maxFractionDigits]="2" />
-                    </div>
-                    <div class="field col">
-                        <label for="altura">Výška (cm)</label>
-                        <p-inputNumber id="altura" [(ngModel)]="usuario.altura" [showButtons]="true" [min]="0" [max]="250" />
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label for="objetivo">Cíl</label>
-                    <p-select id="objetivo" [(ngModel)]="usuario.objetivo" [options]="objetivos" optionLabel="label" optionValue="value" placeholder="Vyberte cíl" />
-                </div>
-
-                <div class="field">
                     <label for="activo">Stav</label>
                     <div class="flex align-items-center gap-3">
                         <p-radioButton name="activo" value="true" [(ngModel)]="usuario.activo" inputId="activo1" />
@@ -293,56 +245,34 @@ interface Racion {
         </p-dialog>
 
         <!-- Diálogo para Raciones -->
-        <p-dialog [(visible)]="racionDialog" [style]="{ width: '550px' }" header="Detail porce" [modal]="true" [draggable]="false" [resizable]="false" styleClass="p-fluid">
+        <p-dialog [(visible)]="racionDialog" [style]="{ width: '450px' }" header="Detail porce" [modal]="true" [draggable]="false" [resizable]="false" styleClass="p-fluid">
             <ng-template pTemplate="content">
                 <div class="field">
-                    <label for="nombreRacion">Název porce</label>
+                    <label for="nombreRacion">Název</label>
                     <input type="text" pInputText id="nombreRacion" [(ngModel)]="racion.nombre" required autofocus />
                     <small class="p-error" *ngIf="submitted && !racion.nombre">Název je povinný.</small>
                 </div>
 
                 <div class="field">
-                    <label for="alimento">Potravina</label>
-                    <input type="text" pInputText id="alimento" [(ngModel)]="racion.alimento" required />
-                    <small class="p-error" *ngIf="submitted && !racion.alimento">Potravina je povinná.</small>
+                    <label for="peso">Váha (g)</label>
+                    <p-inputNumber id="peso" [(ngModel)]="racion.peso" [showButtons]="true" [min]="0" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2" />
+                    <small class="p-error" *ngIf="submitted && !racion.peso">Váha je povinná.</small>
                 </div>
 
                 <div class="formgrid grid">
                     <div class="field col">
-                        <label for="cantidad">Množství</label>
-                        <p-inputNumber id="cantidad" [(ngModel)]="racion.cantidad" [showButtons]="true" [min]="0" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2" />
+                        <label for="hidratos">Sacharidy</label>
+                        <p-inputNumber id="hidratos" [(ngModel)]="racion.hidratos" [showButtons]="true" [min]="0" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2" />
                     </div>
                     <div class="field col">
-                        <label for="unidad">Jednotka</label>
-                        <p-select id="unidad" [(ngModel)]="racion.unidad" [options]="unidades" optionLabel="label" optionValue="value" placeholder="Vyberte" />
-                    </div>
-                </div>
-
-                <div class="formgrid grid">
-                    <div class="field col">
-                        <label for="calorias">Kalorie (kcal)</label>
-                        <p-inputNumber id="calorias" [(ngModel)]="racion.calorias" [showButtons]="true" [min]="0" />
-                    </div>
-                    <div class="field col">
-                        <label for="proteinas">Bílkoviny (g)</label>
+                        <label for="proteinas">Bílkoviny</label>
                         <p-inputNumber id="proteinas" [(ngModel)]="racion.proteinas" [showButtons]="true" [min]="0" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2" />
                     </div>
                 </div>
 
-                <div class="formgrid grid">
-                    <div class="field col">
-                        <label for="carbohidratos">Sacharidy (g)</label>
-                        <p-inputNumber id="carbohidratos" [(ngModel)]="racion.carbohidratos" [showButtons]="true" [min]="0" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2" />
-                    </div>
-                    <div class="field col">
-                        <label for="grasas">Tuky (g)</label>
-                        <p-inputNumber id="grasas" [(ngModel)]="racion.grasas" [showButtons]="true" [min]="0" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2" />
-                    </div>
-                </div>
-
                 <div class="field">
-                    <label for="categoria">Kategorie</label>
-                    <p-select id="categoria" [(ngModel)]="racion.categoria" [options]="categorias" optionLabel="label" optionValue="value" placeholder="Vyberte kategorii" />
+                    <label for="grasas">Tuky</label>
+                    <p-inputNumber id="grasas" [(ngModel)]="racion.grasas" [showButtons]="true" [min]="0" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2" />
                 </div>
             </ng-template>
 
@@ -358,9 +288,18 @@ interface Racion {
     styles: [
         `
             .configuracion-container {
-                height: calc(100vh - 6rem);
+                height: calc(100dvh - 6rem); /* Usa dynamic viewport height */
+                min-height: -webkit-fill-available; /* Safari iOS */
                 display: flex;
                 flex-direction: column;
+
+                @supports not (height: 100dvh) {
+                    height: calc(100vh - 6rem); /* Fallback */
+                }
+
+                @media (max-width: 768px) {
+                    height: calc(100dvh - 6rem); /* Ajuste para móviles con menos espacio del header */
+                }
             }
 
             ::ng-deep .configuracion-container .p-card {
@@ -373,6 +312,14 @@ interface Racion {
 
             ::ng-deep .p-tablist-tab-list {
                 background: rgba(15, 23, 42, 0.768627451) !important;
+            }
+
+            ::ng-deep .p-datatable-thead > tr > th.p-datatable-column-sorted .p-datatable-sort-icon {
+                color: var(--brand-primary);
+            }
+
+            ::ng-deep .p-datatable-sort-icon {
+                color: var(--brand-primary);
             }
 
             ::ng-deep .configuracion-container .p-card .p-card-body {
@@ -420,11 +367,21 @@ interface Racion {
 
             /* Input de búsqueda en toolbar con mismo estilo que login */
             ::ng-deep .p-toolbar .p-inputtext {
+                width: 100%;
                 background: rgba(15, 23, 42, 0.768627451) !important;
                 backdrop-filter: blur(10px) !important;
                 border: 1px solid rgba(255, 255, 255, 0.25) !important;
                 transition: all 0.3s ease !important;
                 color: #ffffff !important;
+            }
+
+            ::ng-deep .p-datatable-scrollable > .p-datatable-table-container > .p-datatable-table > .p-datatable-thead,
+            .p-datatable-scrollable > .p-datatable-table-container > .p-virtualscroller > .p-datatable-table > .p-datatable-thead {
+                background: var(--code-background);
+            }
+
+            ::ng-deep .p-dialog .p-dialog-header {
+                padding: 1rem !important;
             }
 
             ::ng-deep .p-toolbar .p-inputtext::placeholder {
@@ -440,6 +397,11 @@ interface Racion {
                 border-color: var(--brand-primary) !important;
                 background: rgba(255, 255, 255, 0.25) !important;
                 box-shadow: 0 0 0 3px rgba(146, 235, 255, 0.15) !important;
+            }
+
+            ::ng-deep .p-button-text.p-button-secondary:not(:disabled):hover {
+                background: var(--brand-primary);
+                color: var(--code-background);
             }
 
             /* Icono de búsqueda */
@@ -459,6 +421,15 @@ interface Racion {
                 flex: 1;
                 display: flex;
                 flex-direction: column;
+            }
+
+            /* Ancho mínimo para la tabla de raciones en móvil */
+            ::ng-deep .raciones-section .p-datatable .p-datatable-table {
+                min-width: 700px;
+            }
+
+            ::ng-deep .raciones-section .p-datatable-wrapper {
+                overflow-x: auto !important;
             }
 
             ::ng-deep .p-datatable {
@@ -525,6 +496,7 @@ interface Racion {
             ::ng-deep .p-datatable .p-datatable-thead > tr > th,
             ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
                 box-sizing: border-box;
+                padding: 1rem !important;
             }
 
             /* Scrollbar personalizada */
@@ -576,7 +548,6 @@ interface Racion {
             /* Estilos responsive para el paginador */
             ::ng-deep .p-paginator {
                 display: flex;
-                flex-wrap: wrap;
                 align-items: center;
                 justify-content: center;
                 gap: 0.75rem;
@@ -802,9 +773,10 @@ interface Racion {
                 max-height: 90vh;
                 overflow: hidden;
                 border-radius: 16px;
-                background: rgba(15, 23, 42, 0.85) !important;
-                backdrop-filter: blur(20px) !important;
-                border: 2px solid var(--brand-primary);
+                background: transparent !important;
+                backdrop-filter: blur(0px) !important;
+                border: 1px solid var(--brand-primary) !important;
+
                 box-shadow:
                     0 8px 32px rgba(0, 0, 0, 0.4),
                     0 0 60px rgba(146, 235, 255, 0.2);
@@ -812,9 +784,8 @@ interface Racion {
 
             ::ng-deep .p-dialog .p-dialog-header {
                 cursor: default !important;
-                padding: 1.5rem;
-                background: rgba(15, 23, 42, 0.6);
-                backdrop-filter: blur(10px);
+                padding: 1rem;
+                background: var(--code-background);
                 border-bottom: 1px solid rgba(146, 235, 255, 0.3);
                 color: var(--brand-primary);
                 border-top-left-radius: 14px;
@@ -843,8 +814,8 @@ interface Racion {
             ::ng-deep .p-dialog .p-dialog-content {
                 max-height: calc(90vh - 180px);
                 overflow-y: auto;
-                padding: 1.5rem;
-                background: rgba(15, 23, 42, 0.4);
+                padding: 1rem;
+                background: var(--code-background);
                 backdrop-filter: blur(10px);
             }
 
@@ -983,15 +954,18 @@ interface Racion {
 
             /* Footer del diálogo - Glassmorphism */
             ::ng-deep .p-dialog .p-dialog-footer {
-                padding: 1rem 1.5rem;
-                background: rgba(15, 23, 42, 0.6);
-                backdrop-filter: blur(10px);
+                padding: 1rem;
+                background: var(--code-background);
                 border-top: 1px solid rgba(146, 235, 255, 0.3);
                 border-bottom-left-radius: 14px;
                 border-bottom-right-radius: 14px;
                 display: flex;
                 justify-content: flex-end;
                 gap: 0.5rem;
+            }
+
+            ::ng-deep .p-toolbar {
+                flex-wrap: nowrap !important;
             }
 
             ::ng-deep .p-dialog .p-dialog-footer .p-button {
@@ -1101,8 +1075,12 @@ interface Racion {
                     max-width: 95vw !important;
                 }
 
-                ::ng-deep .p-dialog .p-dialog-header {
-                    padding: 1.25rem;
+                ::ng-deep .p-datatable-sort-icon {
+                    color: var(--brand-primary) !important;
+                }
+
+                ::ng-deep .p-datatable-thead > tr > th.p-datatable-column-sorted .p-datatable-sort-icon {
+                    color: var(--brand-primary) !important;
                 }
 
                 ::ng-deep .p-dialog .p-dialog-header .p-dialog-title {
@@ -1169,23 +1147,6 @@ export class Configuracion implements OnInit {
         { label: 'Nárůst svalové hmoty', value: 'Nárůst svalové hmoty' },
         { label: 'Udržení', value: 'Udržení' },
         { label: 'Definice', value: 'Definice' }
-    ];
-
-    categorias = [
-        { label: 'Snídaně', value: 'Snídaně' },
-        { label: 'Oběd', value: 'Oběd' },
-        { label: 'Večeře', value: 'Večeře' },
-        { label: 'Svačina', value: 'Svačina' },
-        { label: 'Před tréninkem', value: 'Před tréninkem' },
-        { label: 'Po tréninku', value: 'Po tréninku' }
-    ];
-
-    unidades = [
-        { label: 'gramy (g)', value: 'g' },
-        { label: 'mililitry (ml)', value: 'ml' },
-        { label: 'kus', value: 'kus' },
-        { label: 'šálek', value: 'šálek' },
-        { label: 'lžíce', value: 'lžíce' }
     ];
 
     activeTab: string | number = '0';
@@ -1332,27 +1293,43 @@ export class Configuracion implements OnInit {
         this.raciones.set([
             {
                 id: '1',
-                nombre: 'Energetická snídaně',
-                alimento: 'Ovesné vločky s ovocem',
-                cantidad: 100,
-                unidad: 'g',
-                calorias: 350,
-                proteinas: 12,
-                carbohidratos: 55,
-                grasas: 8,
-                categoria: 'Snídaně'
+                nombre: 'Ovesné vločky',
+                peso: 100,
+                hidratos: 59,
+                proteinas: 13,
+                grasas: 7
             },
             {
                 id: '2',
-                nombre: 'Proteinová svačina',
-                alimento: 'Řecký jogurt',
-                cantidad: 150,
-                unidad: 'g',
-                calorias: 180,
+                nombre: 'Řecký jogurt',
+                peso: 150,
+                hidratos: 6,
                 proteinas: 15,
-                carbohidratos: 12,
-                grasas: 6,
-                categoria: 'Svačina'
+                grasas: 7.5
+            },
+            {
+                id: '3',
+                nombre: 'Kuřecí prsíčka',
+                peso: 120,
+                hidratos: 0,
+                proteinas: 27.6,
+                grasas: 1.44
+            },
+            {
+                id: '4',
+                nombre: 'Bílá rýže',
+                peso: 80,
+                hidratos: 22.4,
+                proteinas: 2.16,
+                grasas: 0.24
+            },
+            {
+                id: '5',
+                nombre: 'Banán',
+                peso: 120,
+                hidratos: 27.6,
+                proteinas: 1.32,
+                grasas: 0.36
             }
         ]);
     }
@@ -1497,7 +1474,7 @@ export class Configuracion implements OnInit {
     saveRacion() {
         this.submitted = true;
 
-        if (this.racion.nombre?.trim() && this.racion.alimento?.trim()) {
+        if (this.racion.nombre?.trim() && this.racion.peso) {
             if (this.racion.id) {
                 // Actualizar ración existente
                 this.raciones.update((racs) => racs.map((r) => (r.id === this.racion.id ? { ...this.racion } : r)));
@@ -1543,21 +1520,6 @@ export class Configuracion implements OnInit {
                 return 'info';
             default:
                 return 'secondary';
-        }
-    }
-
-    getCategoriaSeverity(categoria: string): string {
-        switch (categoria) {
-            case 'Desayuno':
-                return 'success';
-            case 'Almuerzo':
-                return 'info';
-            case 'Cena':
-                return 'warning';
-            case 'Snack':
-                return 'secondary';
-            default:
-                return 'primary';
         }
     }
 }

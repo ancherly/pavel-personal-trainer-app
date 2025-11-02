@@ -17,13 +17,13 @@ import { RippleModule } from 'primeng/ripple';
                             <ng-template pTemplate="header">
                                 <div class="card-icon-container">
                                     <!-- Icono personalizado para configuración -->
-                                    <img src="logo/config.webp" alt="Configuración" class="card-icon-img" />
+                                    <img src="logo/config.webp" alt="Konfigurace" class="card-icon-img" />
                                 </div>
                             </ng-template>
                             <ng-template pTemplate="content">
                                 <div class="card-content">
-                                    <h3 class="card-title">Configuración</h3>
-                                    <p class="card-description">Gestione los usuarios y las raciones pertinentes para usarlas en la aplicación</p>
+                                    <h3 class="card-title">Konfigurace</h3>
+                                    <p class="card-description">Spravujte uživatele a relevantní porce pro použití v aplikaci</p>
                                 </div>
                             </ng-template>
                         </p-card>
@@ -34,13 +34,13 @@ import { RippleModule } from 'primeng/ripple';
                             <ng-template pTemplate="header">
                                 <div class="card-icon-container">
                                     <!-- Usamos el asset movido a public/logo/ -->
-                                    <img src="logo/balance.webp" alt="Equivalencias" class="card-icon-img" />
+                                    <img src="logo/balance.webp" alt="Ekvivalence" class="card-icon-img" />
                                 </div>
                             </ng-template>
                             <ng-template pTemplate="content">
                                 <div class="card-content">
-                                    <h3 class="card-title">Equivalencias</h3>
-                                    <p class="card-description">Consulta y gestiona las equivalencias nutricionales y medidas de alimentos.</p>
+                                    <h3 class="card-title">Ekvivalence</h3>
+                                    <p class="card-description">Konzultujte a spravujte nutriční ekvivalence a množství potravin.</p>
                                 </div>
                             </ng-template>
                         </p-card>
@@ -55,12 +55,24 @@ import { RippleModule } from 'primeng/ripple';
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                min-height: calc(100vh - 120px);
+                height: 100dvh; /* Usa dynamic viewport height para móviles */
+                min-height: -webkit-fill-available; /* Safari iOS */
+                width: 100vw;
                 overflow: hidden;
                 font-family: var(--font-family-primary);
                 padding: 2rem;
                 box-sizing: border-box;
-                position: relative;
+                position: fixed; /* Fija el contenedor */
+                top: 0;
+                left: 0;
+
+                @supports not (height: 100dvh) {
+                    height: 100vh; /* Fallback para navegadores que no soportan dvh */
+                }
+
+                @media (max-width: 768px) {
+                    padding: 1rem; /* Menos padding en móviles */
+                }
             }
 
             .home-container::before {
@@ -87,7 +99,8 @@ import { RippleModule } from 'primeng/ripple';
 
                 @media (max-width: 768px) {
                     grid-template-columns: 1fr;
-                    gap: 1.5rem;
+                    gap: 2rem; /* Reducido de 6rem a 2rem para mejor centrado */
+                    padding: 0 0.5rem;
                 }
             }
 
@@ -211,8 +224,8 @@ import { RippleModule } from 'primeng/ripple';
 
             @media (max-width: 576px) {
                 .card-icon-img {
-                    width: 6.5rem;
-                    height: 6.5rem;
+                    width: 7.5rem;
+                    height: 7.5rem;
                 }
             }
 
