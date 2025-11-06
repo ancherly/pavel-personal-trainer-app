@@ -35,10 +35,10 @@ body {
 body::after {
     content: '';
     position: fixed;
-    top: -10%;
-    left: -5%;
-    width: 110vw;
-    height: 120vh;
+    top: 0%;
+    left: 0%;
+    width: 100vw;
+    height: 100vh;
     background-image: url('./demo/images/background.webp');
     background-position: center;
     background-size: cover;
@@ -48,7 +48,7 @@ body::after {
 
     /* En móviles, asegurar que cubra todo incluso con cambios de viewport */
     @media (max-width: 768px) {
-        top: -15%;
+        top: -5%;
         left: -5%;
         width: 110vw;
         height: 130vh;
@@ -75,7 +75,7 @@ body::before {
     width: 110vw;
     height: 120vh;
     background: rgb(34 34 34 / 73%);
-    backdrop-filter: blur(0.5px);
+    // backdrop-filter: blur(0.5px);
     z-index: -1;
     pointer-events: none;
 
