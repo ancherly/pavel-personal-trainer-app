@@ -28,7 +28,7 @@ interface AlimentoEquivalente {
     standalone: true,
     imports: [CommonModule, FormsModule, CardModule, ButtonModule, InputTextModule, InputIconModule, IconFieldModule, InputNumberModule, LucideAngularModule],
     template: `
-        <div class="equivalencias-container">
+        <div class="equivalencias-container" [class.selection-active]="alimentoSeleccionado">
             <div class="layout-grid">
                 <!-- Paso 1: Seleccionar Alimento y Ajustar Cantidad -->
                 <p-card class="paso-card">
@@ -36,7 +36,6 @@ interface AlimentoEquivalente {
                         <!-- Buscador -->
                         <div class="search-toolbar">
                             <div style="display: flex; align-items: center; gap: 0.75rem;">
-                                <lucide-icon [img]="PointerIcon" [size]="24" class="search-icon-pointer"></lucide-icon>
                                 <p-iconField iconPosition="left" class="search-field">
                                     <p-inputIcon>
                                         <i class="pi pi-search"></i>
@@ -110,7 +109,6 @@ interface AlimentoEquivalente {
                         <!-- Buscador de Equivalentes -->
                         <div class="search-toolbar">
                             <div style="display: flex; align-items: center; gap: 0.75rem;">
-                                <lucide-icon [img]="ArrowRightLeftIcon" [size]="24" class="search-icon-equiv"></lucide-icon>
                                 <p-iconField iconPosition="left" class="search-field">
                                     <p-inputIcon>
                                         <i class="pi pi-search"></i>
@@ -205,7 +203,7 @@ interface AlimentoEquivalente {
             .layout-grid {
                 display: grid;
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 1rem;
                 overflow: visible; /* Permitir que el grid crezca con el contenido */
             }
 
@@ -424,12 +422,16 @@ interface AlimentoEquivalente {
                 color: rgba(255, 255, 255, 0.9);
             }
 
-            /* Macros como badges minimalistas en una fila */
+            /* Macros como badges minimalistas en una fila (FORZAR siempre en línea) */
             .macros-inline {
                 display: flex;
-                flex-wrap: wrap;
+                flex-direction: row; /* asegurar fila */
+                flex-wrap: nowrap; /* no permitir que pasen a columna */
                 gap: 0.5rem;
-                justify-content: space-between;
+                justify-content: flex-start;
+                align-items: center;
+                overflow-x: auto; /* permitir scroll horizontal en pantallas muy pequeñas */
+                -webkit-overflow-scrolling: touch;
             }
 
             .macro-badge {
@@ -997,6 +999,20 @@ interface AlimentoEquivalente {
                     }
                 }
 
+                /* Cuando hay una selección de alimento, reducir las cards a 50dvh en móviles */
+                .selection-active .paso-card {
+                    height: calc(54vh - 6rem) !important;
+                    max-height: calc(54dvh - 6rem) !important;
+                    min-height: calc(54dvh - 6rem) !important;
+                    overflow: hidden;
+
+                    @supports not (height: 100dvh) {
+                        /* Fallback para navegadores que no soportan dvh */
+                        height: calc(54vh - 6rem) !important;
+                        max-height: calc(54vh - 6rem) !important;
+                        min-height: calc(54vh - 6rem) !important;
+                    }
+                }
                 ::ng-deep .paso-card .p-card-content {
                     height: 100%;
                     min-height: 0;
@@ -1093,7 +1109,7 @@ interface AlimentoEquivalente {
                 }
 
                 .tabla-row {
-                    padding: 0.875rem 1rem;
+                    padding: 0.6rem;
                     font-size: 0.875rem;
                 }
 
@@ -1156,7 +1172,7 @@ interface AlimentoEquivalente {
 
             @media screen and (max-width: 480px) {
                 .tabla-row {
-                    padding: 0.75rem 0.875rem;
+                    padding: 0.6rem;
                     font-size: 0.8rem;
                 }
 
@@ -1215,9 +1231,13 @@ interface AlimentoEquivalente {
 
             /* Para pantallas muy pequeñas o zoom muy alto */
             @media screen and (max-width: 360px) {
+                /* Mantener las macros en línea incluso en pantallas muy pequeñas.
+                   Usamos scroll horizontal si no caben. */
                 .macros-inline {
-                    flex-direction: column;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
                     gap: 0.4rem;
+                    overflow-x: auto;
                 }
 
                 .macro-badge {
@@ -1232,6 +1252,48 @@ interface AlimentoEquivalente {
 
                 .macro-badge strong {
                     font-size: 1rem;
+                }
+            }
+
+            /* Ajustes específicos para móviles con poca altura (pantallas cortas) */
+            /* Aplicar cuando la altura de la ventana sea menor o igual a 812px */
+            @media screen and (max-width: 767px) and (max-height: 800px) {
+                /* Si la ventana es muy corta, dar más espacio al listado y permitir scroll en el panel */
+                .selection-active .paso-card {
+                    /* Incrementar ligeramente la carta para que la tabla no colapse */
+                    height: calc(70dvh - 6rem) !important;
+                    max-height: calc(70dvh - 6rem) !important;
+                    min-height: calc(70dvh - 6rem) !important;
+                }
+
+                /* Asegurar que la tabla tenga un mínimo visible razonable */
+                .tabla-body {
+                    min-height: 160px; /* suficiente para ver varios elementos */
+                }
+
+                /* Permitir que el panel de control tenga altura limitada y scrolleable */
+                .panel-control {
+                    max-height: calc(40dvh);
+                    overflow-y: auto;
+                    -webkit-overflow-scrolling: touch;
+                }
+            }
+
+            /* Fallback para pantallas aún más cortas: priorizar el listado sobre el panel y usar scroll */
+            @media screen and (max-width: 767px) and (max-height: 640px) {
+                .selection-active .paso-card {
+                    height: calc(76dvh - 6rem) !important;
+                    max-height: calc(76dvh - 6rem) !important;
+                    min-height: calc(76dvh - 6rem) !important;
+                }
+
+                .tabla-body {
+                    min-height: 200px;
+                }
+
+                .panel-control {
+                    max-height: calc(34dvh);
+                    overflow-y: auto;
                 }
             }
         `
@@ -1314,24 +1376,23 @@ export class Equivalencias implements OnInit {
         this.equivalentesFiltrados.set(alimentosDisponibles);
         this.searchTermEquiv = ''; // Resetear búsqueda de equivalentes
 
-        // Hacer scroll SOLO dentro del contenedor de la tabla, sin mover el scroll general
+        // Ajustar scroll dentro del contenedor de la tabla.
+        // En móvil el tamaño de las tarjetas cambia al seleccionar, por eso usamos un tiempo
+        // de espera ligeramente mayor y calculamos la posición relativa usando offsetTop
+        // para evitar saltos de scroll causados por cambios de layout.
+        const isMobile = window.matchMedia('(max-width: 1023px)').matches;
+        const waitMs = isMobile ? 250 : 100;
+
         setTimeout(() => {
-            const tablaBody = document.querySelector('.tabla-body') as HTMLElement;
-            const selectedRow = document.querySelector('.tabla-row.selected') as HTMLElement;
+            const tablaBodies = document.querySelectorAll('.tabla-body');
+            // En layouts apilados (móvil) puede haber dos contenedores; el primero corresponde a la lista principal
+            const tablaBody = (tablaBodies.length > 0 ? tablaBodies[0] : document.querySelector('.tabla-body')) as HTMLElement | null;
+            const selectedRow = document.querySelector('.tabla-row.selected') as HTMLElement | null;
 
             if (tablaBody && selectedRow) {
-                // Calcular la posición relativa dentro del contenedor
-                const containerRect = tablaBody.getBoundingClientRect();
-                const rowRect = selectedRow.getBoundingClientRect();
-                const scrollOffset = rowRect.top - containerRect.top - containerRect.height / 2 + rowRect.height / 2;
-
-                // Hacer scroll solo dentro del contenedor
-                tablaBody.scrollBy({
-                    top: scrollOffset,
-                    behavior: 'smooth'
-                });
+                this.scrollRowIntoContainer(tablaBody, selectedRow, { center: true });
             }
-        }, 100);
+        }, waitMs);
     }
 
     seleccionarEquivalente(alimento: Alimento) {
@@ -1349,27 +1410,29 @@ export class Equivalencias implements OnInit {
             pesoEquivalente
         };
 
-        // Hacer scroll SOLO dentro del contenedor de la tabla, sin mover el scroll general
+        // Scroll dentro del contenedor de equivalentes. Usamos la misma lógica robusta que para la lista principal.
+        const isMobile = window.matchMedia('(max-width: 1023px)').matches;
+        const waitMs = isMobile ? 250 : 100;
+
         setTimeout(() => {
             const tablasBodies = document.querySelectorAll('.tabla-body');
             const selectedRows = document.querySelectorAll('.tabla-row.selected');
 
+            // En desktop hay dos contenedores/filas; en móvil la estructura puede ser apilada.
             if (tablasBodies.length > 1 && selectedRows.length > 1) {
                 const tablaEquivalentes = tablasBodies[1] as HTMLElement;
                 const selectedRow = selectedRows[1] as HTMLElement;
 
-                // Calcular la posición relativa dentro del contenedor
-                const containerRect = tablaEquivalentes.getBoundingClientRect();
-                const rowRect = selectedRow.getBoundingClientRect();
-                const scrollOffset = rowRect.top - containerRect.top - containerRect.height / 2 + rowRect.height / 2;
-
-                // Hacer scroll solo dentro del contenedor
-                tablaEquivalentes.scrollBy({
-                    top: scrollOffset,
-                    behavior: 'smooth'
-                });
+                this.scrollRowIntoContainer(tablaEquivalentes, selectedRow, { center: true });
+            } else if (tablasBodies.length === 1 && selectedRows.length >= 1) {
+                // Fallback: si solo existe un contenedor, intentar hacer scroll ahí.
+                const tablaEquivalentes = tablasBodies[0] as HTMLElement;
+                const selectedRow = selectedRows[selectedRows.length - 1] as HTMLElement;
+                if (tablaEquivalentes && selectedRow) {
+                    this.scrollRowIntoContainer(tablaEquivalentes, selectedRow, { center: true });
+                }
             }
-        }, 100);
+        }, waitMs);
     }
 
     incrementarPeso() {
@@ -1426,5 +1489,40 @@ export class Equivalencias implements OnInit {
         if (caloriasPor100g === 0) return 0;
 
         return Number(((caloriasObjetivo * 100) / caloriasPor100g).toFixed(0));
+    }
+
+    /**
+     * Hace scroll dentro de un contenedor para centrar (o acercar) una fila seleccionada.
+     * Usa offsetTop/offsetHeight para evitar depender de rectángulos que cambian con el layout.
+     */
+    private scrollRowIntoContainer(container: HTMLElement, row: HTMLElement, opts: { center?: boolean } = { center: true }) {
+        try {
+            const containerHeight = container.clientHeight || container.getBoundingClientRect().height;
+            const rowTop = row.offsetTop; // offset relativo al contenedor
+            const rowHeight = row.offsetHeight || row.getBoundingClientRect().height;
+
+            let targetTop: number;
+            if (opts.center) {
+                targetTop = rowTop - containerHeight / 2 + rowHeight / 2;
+            } else {
+                // Asegurar que la fila quede visible, con un pequeño margen
+                const margin = 8;
+                if (rowTop < container.scrollTop) targetTop = rowTop - margin;
+                else if (rowTop + rowHeight > container.scrollTop + containerHeight) targetTop = rowTop - containerHeight + rowHeight + margin;
+                else targetTop = container.scrollTop; // ya visible
+            }
+
+            // Limitar el valor al rango válido
+            targetTop = Math.max(0, Math.min(targetTop, container.scrollHeight - containerHeight));
+
+            container.scrollTo({ top: targetTop, behavior: 'smooth' });
+        } catch (e) {
+            // En caso de error hacemos un scrollIntoView como fallback
+            try {
+                row.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            } catch (er) {
+                // Silenciar errores, no críticos
+            }
+        }
     }
 }

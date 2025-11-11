@@ -13,7 +13,6 @@ import { LayoutService } from '../service/layout.service';
 
         <a class="layout-topbar-logo-centered" routerLink="/">
             <img src="logo/Logo-Pavel-Personal-Trainer-266x300.png" alt="Logo Pavel Personal Trainer" style="height: 40px; width: auto;" />
-            <span>Pavel App</span>
         </a>
     </div>`,
     styles: [
